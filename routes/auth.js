@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const auth = require("../middlewares/auth");
 const authRoter = express.Router();
 
 //SIGNUP 
@@ -58,6 +59,42 @@ authRoter.post("/api/signin",async(req, res)=>{
     }
 });
 
+// userBy Token
+
+
+authRoter.post("/tokenIsValid",async(req, res)=>{
+    try{
+       const token = req.header("x-auth-token");
+
+       // if token is null then json false
+
+       if(!token) return res.json(false);
+      const verified =  jwt.verify(token,"passwordKey")
+
+       // if verified is null then json false
+
+      if(!verified) return res.json(false);
+      const user = await User.findById(verified.id);
+
+      // if user is null then json false
+
+      if(!user) return res.json(false);
+
+      //else
+
+      res.json(true);
+
+    }catch(e){
+        res.status(500).json({error: e.message});
+    }
+});
+
+// Get user data
+
+authRoter.get('/', auth , async(req , res)=>{
+    const user = await User.findById(req.user);
+    res.json({...user._doc, token: req.token});
+});
 
 
 
