@@ -1,5 +1,6 @@
 const express =require("express");
 const mongoose = require("mongoose");
+const adminRouter = require("./routes/admin");
 
 
 const authRoter =require("./routes/auth");
@@ -10,6 +11,7 @@ const app =express();
 
 app.use(express.json());
 app.use(authRoter);
+app.use(adminRouter);
 
 
 // Connections
