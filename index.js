@@ -5,6 +5,7 @@ const adminRouter = require("./routes/admin");
 
 const authRoter =require("./routes/auth");
 const productRouter = require("./routes/product");
+const userRouter = require("./routes/user");
 
 const PORT = process.env.PORT || 3000;
 const DB = "mongodb+srv://zaman:1234567890@cluster0.absrvai.mongodb.net/?retryWrites=true&w=majority";
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(authRoter);
 app.use(adminRouter);
 app.use(productRouter);
+app.use(userRouter);
 
 
 // Connections
