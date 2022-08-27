@@ -22,7 +22,7 @@ userRouter.post('/api/add-to-cart',auth,async(req , res)=>{
                 }
             }
             if(isProductFound){
-                let producttt = user.cart.find((productt)=> productt.Product._id.equal(product.id));
+                let producttt = user.cart.find((productt)=> productt.Product._id.equal(product._id));
                 producttt.quantity += 1;
             }else{
                 user.cart.push({product, quantity:1}); 
