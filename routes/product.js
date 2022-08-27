@@ -30,5 +30,31 @@ productRouter.get('/api/products/search/:name',auth,async(req ,res)=>{
     }
 });
 
+// create a post request to rating a product
+
+productRouter.post('/api/rating-product',auth, async(req , res)=>{
+   try{
+    const {id , rating} = req.body;
+    let product = await Product.findById(id);
+    for(let i=0; i<product.ratings.length;i++){
+        if(product.ratings[i].userId == req.user){
+            // i = start && 1 = how many number is deleted
+            product.ratings.splice(i , 1);
+            break;
+        }
+    }
+    const ratinSchema = {
+        userId:req.user,
+        rating,
+    };
+    product.ratings.push(ratinSchema);
+    product = await product.save();
+    res.json(product);
+   }catch(e)
+   {
+    res.status(500).json({error:e.message});
+   }
+});
+
 
 module.exports = productRouter;

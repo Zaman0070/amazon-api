@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ratinSchema = require("./rating");
 
 const productSchema = mongoose.Schema({
     productName:{
@@ -30,6 +31,9 @@ const productSchema = mongoose.Schema({
         required :true,
         trim:true,
     },
+    ratings: [
+        ratinSchema
+    ]
 
 });
 
