@@ -37,7 +37,7 @@ userRouter.post("/api/add-to-cart", auth, async (req, res) => {
   });
 
   //Remove add to cart
-  userRouter.delete("/api/remove-from-cart/", auth, async (req, res) => {
+  userRouter.delete("/api/remove-from-cart/:id", auth, async (req, res) => {
     try {
       const { id } = req.params;
       const product = await Product.findById(id);
