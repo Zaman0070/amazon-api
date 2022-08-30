@@ -113,6 +113,17 @@ userRouter.post("/api/add-to-cart", auth, async (req, res) => {
     }
   });
 
+  // User order all
+  userRouter.get("/api/orders/me", auth, async (req, res) => {
+    try {
+      const order = await Order.find({userId:req.user});
+
+      res.json(order);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
   
 
 module.exports = userRouter;
