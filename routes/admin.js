@@ -2,6 +2,7 @@ const express = require('express');
 const adminRouter = express.Router();
 const admin = require('../middlewares/admin');
 const { Product } = require('../models/product');
+const Order = require('../models/order');
 
 // Add Product
 
@@ -45,6 +46,17 @@ adminRouter.post('/admin/delete-products',admin,async(req , res)=>{
         const { id } = req.body;
         let product = await Product.findByIdAndDelete(id);
         res.json(product);
+    }catch(e){
+        res.status(500).json({error:e.message});
+    }
+});
+
+// Get all Order
+
+adminRouter.get('/admin/get-orders',admin,async(req , res)=>{
+    try{
+        const order = await Order.find()
+        res.json(order);
     }catch(e){
         res.status(500).json({error:e.message});
     }
